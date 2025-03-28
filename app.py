@@ -17,7 +17,12 @@ creds = None  # 인증 정보를 전역에 저장 (테스트용, 실제 배포 �
 @app.route("/")
 def index():
     return "✅ Flask 서버가 Render에서 정상 작동 중입니다!"
+# 아래 꼭 추가!
+import os
 
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))  # Render용 포트
+    app.run(host="0.0.0.0", port=port)
 @app.route("/login")
 def login():
     flow = Flow.from_client_config({
