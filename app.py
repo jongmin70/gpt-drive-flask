@@ -52,10 +52,8 @@ def callback():
             }
         }, scopes=SCOPES)
         flow.redirect_uri = REDIRECT_URI
-        flow.fetch_token(
-            authorization_response=request.url,
-            redirect_uri=REDIRECT_URI
-        )
+        flow.fetch_token(authorization_response=request.url)
+
         global creds
         creds = flow.credentials
         return "✅ 인증 완료! 이제 GPT에서 사용할 수 있습니다."
