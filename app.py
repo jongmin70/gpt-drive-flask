@@ -2,15 +2,17 @@ from flask import Flask, request, redirect
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
+from werkzeug.middleware.proxy_fix import ProxyFix
 import fitz  # PyMuPDF
 import os
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
-# ✅ 여기 본인의 Google OAuth 정보로 바꿔주세요
+# ✅ 본인의 Google OAuth 정보로 설정하세요
 CLIENT_ID = "1057067732894-t68kv8c6bdjal9a5rp0a6gdlo1h9coq8.apps.googleusercontent.com"
 CLIENT_SECRET = "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"
-REDIRECT_URI = "https://gpt-drive-api.onrender.com/callback"  # Render 도메인에 맞게 설정
+REDIRECT_URI = "https://gpt-drive-api.onrender.com/callback"
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
 
 creds = None  # 인증된 사용자 정보를 저장 (간단 구현)
